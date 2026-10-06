@@ -1,0 +1,12 @@
+{
+  "RequiredWallParameters": [],
+  "CobieParameters": [],
+  "ApprovedWorksetNames": [],
+  "ApprovedWallTypeNamePatterns": [],
+  "DuplicateToleranceFeet": 0.01,
+  "ConnectionToleranceFeet": 0.25,
+  "CoordinateLimitFeet": 0,
+  "RequireAtLeastOneWallEndConnectedWhenNearbyWallExists": true,
+  "CheckWallTypeNameAgainstApprovedPatterns": false,
+  "CheckWorksetAgainstApprovedNames": false
+}

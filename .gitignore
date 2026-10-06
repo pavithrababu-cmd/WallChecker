@@ -1,0 +1,25 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build output
+bin/
+obj/
+
+# NuGet
+packages/
+
+# Revit build files
+*.dll
+*.pdb
+
+# JetBrains
+.idea/
+
+# Temporary files
+*.tmp
+*.log
+
+# Windows
+Thumbs.db

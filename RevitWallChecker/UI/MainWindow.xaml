@@ -1,0 +1,347 @@
+<Window x:Class="RevitWallChecker.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Wall Quality Checker"
+        Height="850"
+        Width="1450"
+        MinHeight="650"
+        MinWidth="1100"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="18">
+
+        <Grid.RowDefinitions>
+            <!-- 0 = Title -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- 1 = Buttons -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- 2 = Current Model -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- 3 = Issue Breakdown -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- 4 = Wall Issues -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- ========================================================= -->
+        <!-- TITLE -->
+        <!-- ========================================================= -->
+
+        <TextBlock Grid.Row="0"
+                   Text="WALL QUALITY CHECKER"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Margin="0,0,0,14"/>
+
+
+        <!-- ========================================================= -->
+        <!-- ACTION BUTTONS -->
+        <!-- ========================================================= -->
+
+        <DockPanel Grid.Row="1"
+                   Margin="0,0,0,14">
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button x:Name="RunCheckButton"
+                        Content="RUN WALL QUALITY CHECK"
+                        Width="220"
+                        Height="42"
+                        Margin="0,0,10,0"
+                        Click="RunCheckButton_Click"/>
+
+                <Button x:Name="ExportButton"
+                        Content="EXPORT EXCEL"
+                        Width="130"
+                        Height="42"
+                        Margin="0,0,10,0"
+                        Click="ExportButton_Click"/>
+
+                <Button x:Name="SelectButton"
+                        Content="SELECT WALL IN REVIT"
+                        Width="165"
+                        Height="42"
+                        Margin="0,0,10,0"
+                        Click="SelectButton_Click"/>
+
+                <Button x:Name="FixAllIssuesButton"
+                        Content="FIX ALL ISSUES"
+                        Width="150"
+                        Height="42"
+                        Margin="0,0,10,0"
+                        Click="FixAllIssuesButton_Click"/>
+
+            </StackPanel>
+
+            <TextBlock x:Name="StatusText"
+                       Text="Ready"
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0"
+                       FontSize="14"/>
+
+        </DockPanel>
+
+
+        <!-- ========================================================= -->
+        <!-- CURRENT MODEL -->
+        <!-- ========================================================= -->
+
+        <GroupBox Grid.Row="2"
+                  Header="CURRENT MODEL"
+                  Margin="0,0,0,12">
+
+            <Grid Margin="10">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <!-- WALLS -->
+
+                <StackPanel Grid.Column="0">
+
+                    <TextBlock Text="WALLS"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ModelWallsText"
+                               Text="0"
+                               FontSize="20"/>
+
+                </StackPanel>
+
+
+                <!-- WALL TYPES -->
+
+                <StackPanel Grid.Column="1">
+
+                    <TextBlock Text="WALL TYPES USED"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ModelWallTypesText"
+                               Text="0"
+                               FontSize="20"/>
+
+                </StackPanel>
+
+
+                <!-- LEVELS -->
+
+                <StackPanel Grid.Column="2">
+
+                    <TextBlock Text="LEVELS"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ModelLevelsText"
+                               Text="0"
+                               FontSize="20"/>
+
+                </StackPanel>
+
+
+                <!-- WORKSETS -->
+
+                <StackPanel Grid.Column="3">
+
+                    <TextBlock Text="WORKSETS USED"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ModelWorksetsText"
+                               Text="0"
+                               FontSize="20"/>
+
+                </StackPanel>
+
+
+                <!-- MATERIALS -->
+
+                <StackPanel Grid.Column="4">
+
+                    <TextBlock Text="MATERIALS USED"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ModelMaterialsText"
+                               Text="0"
+                               FontSize="20"/>
+
+                </StackPanel>
+
+
+            </Grid>
+
+        </GroupBox>
+
+
+        <!-- ========================================================= -->
+        <!-- ISSUE BREAKDOWN -->
+        <!-- ========================================================= -->
+
+        <GroupBox Grid.Row="3"
+          Header="ISSUE BREAKDOWN"
+          Margin="0,0,0,12">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  MaxHeight="190">
+
+                <StackPanel x:Name="IssueBreakdownPanel"
+                    Margin="12"/>
+
+            </ScrollViewer>
+
+        </GroupBox>
+
+
+        <!-- ========================================================= -->
+        <!-- WALL ISSUES -->
+        <!-- ========================================================= -->
+
+        <GroupBox Grid.Row="4"
+                  Header="WALL ISSUES">
+
+            <Grid Margin="5">
+
+                <Grid.RowDefinitions>
+
+                    <!-- Filters -->
+                    <RowDefinition Height="Auto"/>
+
+                    <!-- Results -->
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+
+
+                <!-- ================================================= -->
+                <!-- FILTERS -->
+                <!-- ================================================= -->
+
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,8">
+
+
+                    <TextBlock Text="FILTER BY CHECK:"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="5,0,10,0"/>
+
+
+                    <ComboBox x:Name="CheckFilterComboBox"
+                              Width="200"
+                              Height="30"
+                              Margin="0,0,25,0"
+                              VerticalAlignment="Center"
+                              SelectionChanged="FilterComboBox_SelectionChanged"/>
+
+
+                    <TextBlock Text="FILTER BY ISSUE:"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="5,0,10,0"/>
+
+
+                    <ComboBox x:Name="IssueFilterComboBox"
+                              Width="450"
+                              Height="30"
+                              VerticalAlignment="Center"
+                              SelectionChanged="FilterComboBox_SelectionChanged"/>
+
+                </StackPanel>
+
+
+                <!-- ================================================= -->
+                <!-- RESULTS GRID -->
+                <!-- ================================================= -->
+
+                <DataGrid x:Name="ResultsGrid"
+                          Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          SelectionMode="Single"
+                          Margin="0"
+                          GridLinesVisibility="All"
+                          HeadersVisibility="Column">
+
+
+                    <DataGrid.Columns>
+
+
+                        <!-- ELEMENT ID -->
+
+                        <DataGridTextColumn Header="Element ID"
+                                            Binding="{Binding ElementId}"
+                                            Width="90"/>
+
+
+                        <!-- CHECK -->
+
+                        <DataGridTextColumn Header="Check"
+                                            Binding="{Binding CheckName}"
+                                            Width="145"/>
+
+
+                        <!-- STATUS -->
+
+                        <DataGridTextColumn Header="Status"
+                                            Binding="{Binding Status}"
+                                            Width="85"/>
+
+
+                        <!-- ISSUE -->
+
+                        <DataGridTextColumn Header="Issue"
+                                            Binding="{Binding Issue}"
+                                            Width="390"/>
+
+
+                        <!-- ACTUAL -->
+
+                        <DataGridTextColumn Header="Actual"
+                                            Binding="{Binding ActualValue}"
+                                            Width="190"/>
+
+
+                        <!-- EXPECTED -->
+
+                        <DataGridTextColumn Header="Expected"
+                                            Binding="{Binding ExpectedValue}"
+                                            Width="190"/>
+
+
+                        <!-- WALL TYPE -->
+
+                        <DataGridTextColumn Header="Wall Type"
+                                            Binding="{Binding WallType}"
+                                            Width="190"/>
+
+
+                        <!-- LEVEL -->
+
+                        <DataGridTextColumn Header="Level"
+                                            Binding="{Binding Level}"
+                                            Width="150"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </Grid>
+
+        </GroupBox>
+
+    </Grid>
+
+</Window>

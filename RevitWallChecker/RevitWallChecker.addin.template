@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Revit Wall Checker</Name>
+    <Assembly>REPLACE_WITH_FULL_PATH_TO_RevitWallChecker.dll</Assembly>
+    <AddInId>6F4A6D2D-7E76-4E75-9F54-1A1F4D1A5A21</AddInId>
+    <FullClassName>RevitWallChecker.App</FullClassName>
+    <VendorId>RevitWallChecker</VendorId>
+    <VendorDescription>Wall-only BIM quality checking tool.</VendorDescription>
+  </AddIn>
+</RevitAddIns>
